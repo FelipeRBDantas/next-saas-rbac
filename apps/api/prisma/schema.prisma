@@ -16,9 +16,11 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  tokens   Token[]
-  accounts Account[]
-  invites  Invite[]
+  tokens             Token[]
+  accounts           Account[]
+  invites            Invite[]
+  member_on          Member[]
+  owns_organizations Organization[]
 
   @@map("users")
 }
@@ -54,25 +56,52 @@ model Account {
   @@map("accounts")
 }
 
+enum Role {
+  ADMIN
+  MEMBER
+  BILLING
+}
+
 model Invite {
   id        String   @id @default(uuid())
   email     String
+  role      Role
   createdAt DateTime @default(now()) @map("created_at")
 
   author User?   @relation(fields: [userId], references: [id])
   userId String? @map("user_id")
 
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String       @map("organization_id")
+
+  @@unique([email, organizationId])
+  @@index([email])
   @@map("invites")
 }
 
 model Member {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
+  role Role   @default(MEMBER)
 
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String       @map("organization_id")
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  @@index([organizationId, userId])
   @@map("members")
 }
 
 model Organization {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
+  name String
+
+  owner  User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  invites Invite[]
+  members Member[]
 
   @@map("organizations")
 }
