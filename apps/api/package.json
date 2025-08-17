@@ -23,6 +23,9 @@
     "prisma": "^5.12.1",
     "tsx": "^4.7.2"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "eslintConfig": {
     "extends": [
       "@saas/eslint-config/library"
