@@ -30,6 +30,7 @@ export async function requestPasswordRecover(app: FastifyInstance) {
 
       if (!userFormEmail) {
         // We don't want people to know if user really exists
+
         return reply.status(201).send()
       }
 
