@@ -1,3 +1,4 @@
+import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
@@ -21,17 +22,15 @@ export async function getOrganizations(app: FastifyInstance) {
           }),
           response: {
             200: z.object({
-              organization: z.object({
-                id: z.string().uuid(),
-                name: z.string(),
-                slug: z.string(),
-                domain: z.string().nullable(),
-                shouldAttachUsersByDomain: z.boolean(),
-                avatarUrl: z.string().url().nullable(),
-                createdAt: z.date(),
-                updatedAt: z.date(),
-                ownerId: z.string().uuid(),
-              }),
+              organizations: z.array(
+                z.object({
+                  id: z.string().uuid(),
+                  name: z.string(),
+                  slug: z.string(),
+                  avatarUrl: z.string().url().nullable(),
+                  role: roleSchema,
+                }),
+              ),
             }),
           },
         },
@@ -63,7 +62,16 @@ export async function getOrganizations(app: FastifyInstance) {
           },
         })
 
-        return { organizations }
+        const organizationsWithUserRole = organizations.map(
+          ({ members, ...org }) => {
+            return {
+              ...org,
+              role: members[0].role,
+            }
+          },
+        )
+
+        return { organizations: organizationsWithUserRole }
       },
     )
 }
