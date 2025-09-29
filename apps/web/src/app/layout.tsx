@@ -3,7 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Create Next App',
+  title: 'Next SaaS App',
 }
 
 export default function RootLayout({
@@ -12,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body>{children}</body>
+    <html lang="pt-BR" className="dark">
+      <body suppressHydrationWarning>{children}</body>
     </html>
   )
 }
