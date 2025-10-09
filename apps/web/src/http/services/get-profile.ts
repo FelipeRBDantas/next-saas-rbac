@@ -1,6 +1,4 @@
-import { cookies } from 'next/headers'
-
-import { api } from './api-client'
+import { api } from '../clients/api-client'
 
 interface GetProfileResponse {
   user: {
