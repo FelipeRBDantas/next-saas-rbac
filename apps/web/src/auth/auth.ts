@@ -22,5 +22,5 @@ export async function auth() {
     return { user }
   } catch {}
 
-  redirect('/api/auth/sign-out')
+  // redirect('/api/auth/sign-out')
 }

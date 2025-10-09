@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers'
+
 import { api } from './api-client'
 
 interface GetProfileResponse {

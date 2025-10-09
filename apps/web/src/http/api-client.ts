@@ -1,4 +1,3 @@
-import type { CookiesFn } from 'cookies-next'
 import { getCookie } from 'cookies-next'
 import ky, { type Input } from 'ky'
 
@@ -7,17 +6,25 @@ export const api = ky.create({
   hooks: {
     beforeRequest: [
       async (request) => {
-        let cookieStore: CookiesFn | undefined
+        let token: string | undefined
 
         if (typeof window === 'undefined') {
-          const { cookies: serverCookies } = await import('next/headers')
+          const { cookies: getServerCookies } = await import('next/headers')
 
-          cookieStore = serverCookies
+          const cookieStore = await getServerCookies()
+
+          const tokenValue = cookieStore.get('token')?.value
+
+          token = tokenValue ?? undefined
+        } else {
+          const tokenValue = getCookie('token')
+
+          token = typeof tokenValue === 'string' ? tokenValue : undefined
         }
 
-        const token = getCookie('token', { cookies: cookieStore })
-
-        if (token) request.headers.set('Authorization', `Bearer ${token}`)
+        if (token) {
+          request.headers.set('Authorization', `Bearer ${token}`)
+        }
       },
     ],
   },
