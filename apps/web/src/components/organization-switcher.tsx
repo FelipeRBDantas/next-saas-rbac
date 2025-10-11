@@ -1,5 +1,6 @@
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { ChevronsUpDown, PlusCircle } from 'lucide-react'
+import Link from 'next/link'
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import {
@@ -46,10 +47,10 @@ export function OrganizationSwitcher() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <a href="/create-organization" className="cursor-pointer">
+          <Link href="/create-organization" className="cursor-pointer">
             <PlusCircle className="mr-2 size-4" />
             Create new
-          </a>
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
