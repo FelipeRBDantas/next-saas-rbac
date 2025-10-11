@@ -1,5 +1,6 @@
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { ChevronsUpDown, PlusCircle } from 'lucide-react'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import { getOrganizations } from '@/http/services/get-organizations'
@@ -15,12 +16,39 @@ import {
 } from './ui/dropdown-menu'
 
 export async function OrganizationSwitcher() {
+  const cookieStore = await cookies()
+
+  const currentOrg = cookieStore.get('org')?.value
+
   const { organizations } = await getOrganizations()
+
+  const currentOrganization = organizations.find(
+    (org) => org.slug === currentOrg,
+  )
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-2 w-[168px] rounded p-1 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer">
-        <div className="text-muted-foreground">Select organization</div>
+        {currentOrganization ? (
+          <>
+            <Avatar className="mr-2 size-4">
+              {currentOrganization.avatarUrl && (
+                <AvatarImage
+                  src={currentOrganization.avatarUrl}
+                  alt={currentOrganization.name ?? 'Organization photo picture'}
+                />
+              )}
+
+              <AvatarFallback />
+            </Avatar>
+
+            <span className="truncate text-left">
+              {currentOrganization.name}
+            </span>
+          </>
+        ) : (
+          <div className="text-muted-foreground">Select organization</div>
+        )}
 
         <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
       </DropdownMenuTrigger>
