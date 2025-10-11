@@ -25,7 +25,7 @@ export async function ProfileButton() {
           {user?.avatarUrl && (
             <AvatarImage
               src={user?.avatarUrl}
-              alt={user?.name ?? 'Foto de perfil'}
+              alt={user?.name ?? 'Photo picture'}
             />
           )}
 

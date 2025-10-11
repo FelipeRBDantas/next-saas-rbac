@@ -2,6 +2,8 @@ import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { ChevronsUpDown, PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 
+import { getOrganizations } from '@/http/services/get-organizations'
+
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import {
   DropdownMenu,
@@ -12,7 +14,9 @@ import {
   DropdownMenuSeparator,
 } from './ui/dropdown-menu'
 
-export function OrganizationSwitcher() {
+export async function OrganizationSwitcher() {
+  const { organizations } = await getOrganizations()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-2 w-[168px] rounded p-1 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer">
@@ -30,18 +34,24 @@ export function OrganizationSwitcher() {
         <DropdownMenuGroup>
           <DropdownMenuLabel>Organizations</DropdownMenuLabel>
 
-          <DropdownMenuItem>
-            <Avatar className="mr-2 size-4">
-              <AvatarImage
-                src="https://github.com/rocketseat.png"
-                alt="Rocketseat"
-              />
+          {organizations.map((organization) => (
+            <DropdownMenuItem key={organization.id} asChild>
+              <Link href={`/organizations/${organization.slug}`}>
+                <Avatar className="mr-2 size-4">
+                  {organization.avatarUrl && (
+                    <AvatarImage
+                      src={organization.avatarUrl}
+                      alt={organization.name ?? 'Organization photo picture'}
+                    />
+                  )}
 
-              <AvatarFallback />
-            </Avatar>
+                  <AvatarFallback />
+                </Avatar>
+              </Link>
 
-            <span className="truncate">Rocketseat</span>
-          </DropdownMenuItem>
+              <span className="truncate">{organization.name}</span>
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
