@@ -21,16 +21,16 @@ export function ErrorPage({
   }, [title, message])
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-50 text-center px-6">
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">{title}</h1>
+    <div className="flex flex-col items-center justify-center h-screen bg-background text-foreground text-center px-6 transition-colors duration-300">
+      <h1 className="text-3xl font-semibold mb-3 text-primary">{title}</h1>
 
-      <p className="text-gray-600 mb-6">{message}</p>
+      <p className="text-muted-foreground mb-8">{message}</p>
 
-      <div className="flex gap-4">
+      <div className="flex flex-wrap justify-center gap-4">
         {onRetry && (
           <button
             onClick={onRetry}
-            className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="px-5 py-2.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-2 focus:ring-ring transition"
           >
             Tentar novamente
           </button>
@@ -39,7 +39,7 @@ export function ErrorPage({
         {showHomeLink && (
           <Link
             href="/"
-            className="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+            className="px-5 py-2.5 rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/90 focus:ring-2 focus:ring-ring transition"
           >
             Voltar à página inicial
           </Link>
