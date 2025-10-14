@@ -1,7 +1,6 @@
-import Link from 'next/link'
-
 import Header from '@/components/header'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
@@ -27,8 +26,25 @@ export default function CreateOrganization() {
           )} */}
 
           <div className="space-y-1">
-            <Label htmlFor="email">E-mail</Label>
-            <Input name="email" type="email" id="email" />
+            <Label htmlFor="name">Organization name</Label>
+            <Input name="name" id="name" />
+
+            {/* {errors?.name && (
+              <p className="text-xs font-medium text-red-500 dark:text-red-400">
+                {errors.name[0]}
+              </p>
+            )} */}
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="domain">E-mail domain</Label>
+            <Input
+              name="domain"
+              type="text"
+              id="domain"
+              inputMode="url"
+              placeholder="example.com"
+            />
 
             {/* {errors?.email && (
               <p className="text-xs font-medium text-red-500 dark:text-red-400">
@@ -38,29 +54,27 @@ export default function CreateOrganization() {
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="password">Password</Label>
-            <Input name="password" type="password" id="password" />
+            <div className="flex items-baseline space-x-2">
+              <Checkbox
+                name="shouldAttachUsersByDomain"
+                id="shouldAttachUsersByDomain"
+              />
 
-            {/* {errors?.password && (
-              <p className="text-xs font-medium text-red-500 dark:text-red-400">
-                {errors.password[0]}
-              </p>
-            )} */}
+              <label htmlFor="shouldAttachUsersByDomain">
+                <span className="text-sm font-medium leading-none">
+                  Auto join new members
+                </span>
 
-            <Link
-              href="/auth/forgot-password"
-              className="text-xs font-medium text-foreground hover:underline"
-            >
-              Forgot your password?
-            </Link>
+                <p>
+                  This will automatically invite all members with same e-mail
+                  domain to this organization.
+                </p>
+              </label>
+            </div>
           </div>
 
           <Button type="submit" className="w-full">
             Save organization
-          </Button>
-
-          <Button variant="link" className="w-full" size="sm" asChild>
-            <Link href="/auth/sign-up">Create new account</Link>
           </Button>
         </form>
       </main>
