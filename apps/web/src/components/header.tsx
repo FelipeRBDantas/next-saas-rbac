@@ -13,12 +13,12 @@ export default async function Header() {
   const permissions = await ability()
 
   return (
-    <div className="mx-auto max-w-[1200px] flex items-center justify-between">
+    <div className="mx-auto max-w-[1200px] flex items-center justify-between border-b pb-2">
       <div className="flex items-center gap-3">
         <Image
           src={wolfIcon}
           alt="Logo Wolf Project"
-          className="size-6 filter dark:invert dark:brightness-0 dark:contrast-100"
+          className="size-6 dark:filter-none filter brightness-0 contrast-75"
         />
 
         <Slash className="size-3 -rotate-[24deg] text-border" />
