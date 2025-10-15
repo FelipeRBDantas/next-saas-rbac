@@ -58,7 +58,7 @@ export default function CreateOrganization() {
               <Checkbox
                 name="shouldAttachUsersByDomain"
                 id="shouldAttachUsersByDomain"
-                className="translate-y-0.5"
+                className="translate-y-0.5 cursor-pointer"
               />
 
               <label htmlFor="shouldAttachUsersByDomain" className="space-y-1">
