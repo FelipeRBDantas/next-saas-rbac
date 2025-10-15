@@ -58,14 +58,15 @@ export default function CreateOrganization() {
               <Checkbox
                 name="shouldAttachUsersByDomain"
                 id="shouldAttachUsersByDomain"
+                className="translate-y-0.5"
               />
 
-              <label htmlFor="shouldAttachUsersByDomain">
+              <label htmlFor="shouldAttachUsersByDomain" className="space-y-1">
                 <span className="text-sm font-medium leading-none">
                   Auto join new members
                 </span>
 
-                <p>
+                <p className="text-sm text-muted-foreground">
                   This will automatically invite all members with same e-mail
                   domain to this organization.
                 </p>
