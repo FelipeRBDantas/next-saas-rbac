@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { getCurrentOrg } from '@/auth/auth'
 import { getOrganizations } from '@/http/services/get-organizations'
+import { isActiveRoute } from '@/utils/route'
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import {
@@ -22,6 +23,10 @@ export async function OrganizationSwitcher() {
 
   const currentOrganization = organizations.find(
     (org) => org.slug === currentOrg,
+  )
+
+  const isActiveRouteCreateOrganization = await isActiveRoute(
+    '/create-organization',
   )
 
   return (
@@ -86,7 +91,16 @@ export async function OrganizationSwitcher() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href="/create-organization" className="cursor-pointer">
+          <Link
+            href="/create-organization"
+            className={`cursor-pointer ${
+              isActiveRouteCreateOrganization
+                ? 'pointer-events-none opacity-50'
+                : ''
+            }`}
+            aria-disabled={isActiveRouteCreateOrganization}
+            tabIndex={isActiveRouteCreateOrganization ? -1 : 0}
+          >
             <PlusCircle className="mr-2 size-4" />
             Create new
           </Link>
