@@ -35,7 +35,7 @@ export async function signInWithEmailAndPassword(data: FormData) {
     cookieStore.set('token', token, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7,
-      httpOnly: true,
+      // httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
     })
